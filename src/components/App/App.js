@@ -1,8 +1,11 @@
 import React from "react";
+import TodoList from "../TodoList/TodoList";
 
-function App() {
+const App = () => {
   return (
-    <h1>Hello world</h1>
+    <>
+      <TodoList />
+    </>
   );
 }
 
