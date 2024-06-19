@@ -1,18 +1,18 @@
 import React from "react";
 import TodoItem from "../TodoItem";
-import DummyTodoService from "../../services/dummy-todo-service"
+import './style.css';
 
-const TodoList = () => {
-    const service = new DummyTodoService();
-    const todos = service.getTodos();
+const TodoList = ({ todos, deleteTodo, toggleTodo }) => {
 
     return (
-        <ul>
-            {todos.map((todo) => (
-                <li key={todo.id}>
+        <ul className="todo-list list-group d-inline-flex ">
+            {todos.map((todo, index) => (
+                <li key={todo.id} className="list-group-item ">
                     <TodoItem
                         title={todo.title}
                         completed={todo.completed}
+                        deleteTodo={() => deleteTodo(index)}
+                        toggleTodo={() => toggleTodo(index)}
                     />
                 </li>
             ))}

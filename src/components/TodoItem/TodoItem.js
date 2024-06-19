@@ -1,18 +1,34 @@
 import React from "react";
 import './style.css';
 
-const TodoItem = ({ title, completed }) => {
+const TodoItem = ({ title, completed, index, deleteTodo, toggleTodo }) => {
+
+    let classNames = 'todo-item--title';
+    if (completed) {
+        classNames += ' todo-item--completed';
+    };
 
     return (
-        <>
-            <span
-                style={{ textDecoration: completed ? 'line-through' : 'none' }}
+        <div className="d-flex justify-content-between align-items-center">
+            <div
+                className={classNames}
+                onClick={() => toggleTodo(index)}
             >
                 {title}
+            </div>
+            <span className="ms-auto">
+                <button type='button'
+                    className="btn btn-outline-primary btn-sm ms-2 material-symbols-outlined"
+                    onClick={() => console.log('edit')}>
+                    edit_square
+                </button>
+                <button type='button'
+                    className="btn btn-outline-danger btn-sm ms-2 material-symbols-outlined text-danger-emphasis"
+                    onClick={() => deleteTodo(index)}>
+                    delete
+                </button>
             </span>
-            <button>V</button>
-            <button>X</button>
-        </>
+        </div>
     );
 };
 
