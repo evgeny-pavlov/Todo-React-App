@@ -7,6 +7,8 @@ const App = () => {
   const initTodos = service.getTodos();
 
   const [todos, setTodos] = useState(initTodos);
+  const [editIndex, setEditIndex] = useState(null);
+  const [editTitle, setEditTitle] = useState("");
 
   const deleteTodo = (index) => {
     const newTodos = [...todos];
@@ -20,9 +22,31 @@ const App = () => {
     setTodos(newTodos);
   };
 
+  const editTodo = (index) => {
+    setEditIndex(index);
+    setEditTitle(todos[index].title);
+  };
+
+  const saveTodo = (index) => {
+    const newTodos = [...todos];
+    newTodos[index].title = editTitle;
+    setTodos(newTodos);
+    setEditIndex(null);
+    setEditTitle("");
+  };
+
   return (
     <>
-      <TodoList todos={todos} deleteTodo={deleteTodo} toggleTodo={toggleTodo} />
+      <TodoList
+        todos={todos}
+        deleteTodo={deleteTodo}
+        toggleTodo={toggleTodo}
+        editTodo={editTodo}
+        editIndex={editIndex}
+        editTitle={editTitle}
+        setEditTitle={setEditTitle}
+        saveTodo={saveTodo}
+      />
     </>
   );
 }

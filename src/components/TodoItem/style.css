@@ -5,3 +5,7 @@
 .todo-item--title {
     cursor: pointer;
 }
+
+.done-icon {
+    border: none !important;
+}
