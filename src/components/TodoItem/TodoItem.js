@@ -22,7 +22,7 @@ const TodoItem = ({ title, completed, index, deleteTodo, toggleTodo }) => {
                     onClick={() => console.log('edit')}>
                     edit_square
                 </button>
-                <button type='button'btn-outline-success
+                <button type='button'
                     className="btn btn-outline-danger btn-sm ms-2 material-symbols-outlined text-danger-emphasis"
                     onClick={() => deleteTodo(index)}>
                     delete

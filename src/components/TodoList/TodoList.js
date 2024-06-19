@@ -11,9 +11,8 @@ const TodoList = ({ todos, deleteTodo, toggleTodo }) => {
                     <TodoItem
                         title={todo.title}
                         completed={todo.completed}
-                        index={index}
-                        deleteTodo={deleteTodo}
-                        toggleTodo={toggleTodo}
+                        deleteTodo={() => deleteTodo(index)}
+                        toggleTodo={() => toggleTodo(index)}
                     />
                 </li>
             ))}
