@@ -2,3 +2,7 @@
     list-style-type: none;
     min-width: 500px;
 }
+
+.todo-item {
+    min-height: 54px;
+}
