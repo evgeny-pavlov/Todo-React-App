@@ -1,6 +1,8 @@
 import React, { useState } from "react";
-import TodoList from "../TodoList/TodoList";
 import DummyTodoService from "../../services/dummy-todo-service"
+import TodoList from "../TodoList/TodoList";
+import ListAddItem from "../ListAddItem/ListAddItem";
+import ListFilter from "../ListFilter/ListFilter";
 
 const App = () => {
   const service = new DummyTodoService();
@@ -9,6 +11,22 @@ const App = () => {
   const [todos, setTodos] = useState(initTodos);
   const [editIndex, setEditIndex] = useState(null);
   const [editTitle, setEditTitle] = useState("");
+  const [newTodo, setNewTodo] = useState("");
+
+  const createToDoItem = (newTodo) => {
+    return {
+      id: Date.now().toString(),
+      title: newTodo,
+      completed: false,
+    };
+  }
+
+  const addTodo = () => {
+    if (newTodo.trim() === "") return;
+    const newTodos = [...todos, createToDoItem(newTodo)];
+    setTodos(newTodos);
+    setNewTodo("");
+  };
 
   const deleteTodo = (index) => {
     const newTodos = [...todos];
@@ -35,8 +53,22 @@ const App = () => {
     setEditTitle("");
   };
 
+  const countTodos = (status) => {
+    if (status === "all") return todos.length;
+    if (status === "at_work") return todos.filter(todo => !todo.completed).length;
+    if (status === "completed") return todos.filter(todo => todo.completed).length;
+  };
+
   return (
     <>
+      <ListAddItem
+        newTodo={newTodo}
+        setNewTodo={setNewTodo}
+        addTodo={addTodo}
+      />
+      <ListFilter
+        countTodos={countTodos}
+      />
       <TodoList
         todos={todos}
         deleteTodo={deleteTodo}
