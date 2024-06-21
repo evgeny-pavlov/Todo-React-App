@@ -3,15 +3,18 @@ import DummyTodoService from "../../services/dummy-todo-service"
 import TodoList from "../TodoList/TodoList";
 import ListAddItem from "../ListAddItem/ListAddItem";
 import ListFilter from "../ListFilter/ListFilter";
+import { filterTodos } from "../../utils/filterTodos"
+
 
 const App = () => {
   const service = new DummyTodoService();
   const initTodos = service.getTodos();
 
   const [todos, setTodos] = useState(initTodos);
-  const [editIndex, setEditIndex] = useState(null);
+  const [editId, setEditId] = useState(null);
   const [editTitle, setEditTitle] = useState("");
   const [newTodo, setNewTodo] = useState("");
+  const [filter, setFilter] = useState("all");
 
   const createToDoItem = (newTodo) => {
     return {
@@ -28,36 +31,34 @@ const App = () => {
     setNewTodo("");
   };
 
-  const deleteTodo = (index) => {
-    const newTodos = [...todos];
-    newTodos.splice(index, 1);
+  const deleteTodo = (id) => {
+    const newTodos = todos.filter(todo => todo.id !== id);
     setTodos(newTodos);
   };
 
-  const toggleTodo = (index) => {
-    const newTodos = [...todos];
-    newTodos[index].completed = !newTodos[index].completed;
+  const toggleTodo = (id) => {
+    const newTodos = todos.map(todo =>
+      todo.id === id ? { ...todo, completed: !todo.completed } : todo
+    );
     setTodos(newTodos);
   };
 
-  const editTodo = (index) => {
-    setEditIndex(index);
-    setEditTitle(todos[index].title);
+  const editTodo = (id) => {
+    setEditId(id);
+    const todoToEdit = todos.find(todo => todo.id === id);
+    setEditTitle(todoToEdit.title);
   };
 
-  const saveTodo = (index) => {
-    const newTodos = [...todos];
-    newTodos[index].title = editTitle;
+  const saveTodo = (id) => {
+    const newTodos = todos.map(todo =>
+      todo.id === id ? { ...todo, title: editTitle } : todo
+    );
     setTodos(newTodos);
-    setEditIndex(null);
+    setEditId(null);
     setEditTitle("");
   };
 
-  const countTodos = (status) => {
-    if (status === "all") return todos.length;
-    if (status === "at_work") return todos.filter(todo => !todo.completed).length;
-    if (status === "completed") return todos.filter(todo => todo.completed).length;
-  };
+  const filteredTodos = filterTodos(todos, filter);
 
   return (
     <>
@@ -67,14 +68,16 @@ const App = () => {
         addTodo={addTodo}
       />
       <ListFilter
-        countTodos={countTodos}
+        todos={todos}
+        filter={filter}
+        setFilter={setFilter}
       />
       <TodoList
-        todos={todos}
+        todos={filteredTodos}
         deleteTodo={deleteTodo}
         toggleTodo={toggleTodo}
         editTodo={editTodo}
-        editIndex={editIndex}
+        editId={editId}
         editTitle={editTitle}
         setEditTitle={setEditTitle}
         saveTodo={saveTodo}
