@@ -1,17 +1,12 @@
-class LocalStorageTodoService {
-    constructor() {
-      this.storageKey = "todos";
-    }
-  
-    getTodos() {
-      const todos = localStorage.getItem(this.storageKey);
-      return todos ? JSON.parse(todos) : [];
-    }
-  
-    saveTodos(todos) {
-      localStorage.setItem(this.storageKey, JSON.stringify(todos));
-    }
-  }
-  
-  export default LocalStorageTodoService;
-  
+const storageKey = "todos";
+
+const getTodos = () => {
+  const todos = localStorage.getItem(storageKey);
+  return todos ? JSON.parse(todos) : [];
+};
+
+const saveTodos = (todos) => {
+  localStorage.setItem(storageKey, JSON.stringify(todos));
+};
+
+export { getTodos, saveTodos };

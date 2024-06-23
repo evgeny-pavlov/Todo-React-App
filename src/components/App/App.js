@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from "react";
-import LocalStorageTodoService from "../../services/LocalStorageTodoService";
+import { getTodos, saveTodos } from "../../services/localStorageTodoService"
 import TodoList from "../TodoList/TodoList";
 import ListAddItem from "../ListAddItem/ListAddItem";
 import ListFilter from "../ListFilter/ListFilter";
@@ -7,9 +7,7 @@ import { filterTodos } from "../../utils/filterTodos"
 
 
 const App = () => {
-  const service = useMemo(() => new LocalStorageTodoService(), []);
-  const initTodos = service.getTodos();
-
+  const initTodos = useMemo(() => getTodos(), []);
   const [todos, setTodos] = useState(initTodos);
   const [editId, setEditId] = useState(null);
   const [editTitle, setEditTitle] = useState("");
@@ -17,12 +15,12 @@ const App = () => {
   const [filter, setFilter] = useState("all");
 
   useEffect(() => {
-    setTodos(service.getTodos());
-  }, [service]);
+    setTodos(getTodos());
+  }, []);
 
   useEffect(() => {
-    service.saveTodos(todos);
-  }, [todos, service]);
+    saveTodos(todos);
+  }, [todos]);
 
   const createToDoItem = (newTodo) => {
     return {
