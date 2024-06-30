@@ -1,8 +1,15 @@
 import React from "react";
 import "./style.css"
 import { countTodos } from "../../utils/filterTodos";
+import { Todo } from "../../types/types";
 
-const ListFilter = ({ todos, setFilter, filter }) => {
+type ListFilterProps = {
+    todos: Todo[];
+    setFilter: (value: string) => void;
+    filter: string;   
+}
+
+const ListFilter: React.FC<ListFilterProps> = ({ todos, setFilter, filter }) => {
 
     const buttons = [
         { name: 'all', label: 'All' },

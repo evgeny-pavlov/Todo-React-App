@@ -1,8 +1,20 @@
 import React from "react";
 import TodoItem from "../TodoItem";
 import './style.css';
+import { Todo } from "../../types/types";
 
-const TodoList = ({ todos, deleteTodo, toggleTodo, editTodo, editId, editTitle, setEditTitle, saveTodo  }) => {
+type TodoListProps = {
+    todos: Todo[];
+    deleteTodo: (id: string) => void;
+    toggleTodo: (id: string) => void;
+    editTodo: (id: string) => void;
+    editId: string;
+    editTitle: string;
+    setEditTitle: (title: string) => void;
+    saveTodo: (id:string) => void;
+}
+
+const TodoList: React.FC<TodoListProps> = ({ todos, deleteTodo, toggleTodo, editTodo, editId, editTitle, setEditTitle, saveTodo  }) => {
 
     return (
         <ul className="todo-list list-group d-inline-flex ">

@@ -1,3 +1,5 @@
+import { Todo } from "../types/types";
+
 const storageKey = "todos";
 
 const getTodos = () => {
@@ -5,7 +7,7 @@ const getTodos = () => {
   return todos ? JSON.parse(todos) : [];
 };
 
-const saveTodos = (todos) => {
+const saveTodos = (todos: Todo[]) => {
   localStorage.setItem(storageKey, JSON.stringify(todos));
 };
 

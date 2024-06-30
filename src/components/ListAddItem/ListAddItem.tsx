@@ -1,13 +1,19 @@
 import React from "react";
 import "./style.css"
 
-const ListAddItem = ({ newTodo, addTodo, setNewTodo }) => {
+type ListAddItemProps = {
+    newTodo: string;
+    addTodo: () => void;
+    setNewTodo: (title: string) => void;
+}
 
-    const handleChangeNewTodo = (e) => {
+const ListAddItem: React.FC<ListAddItemProps> = ({ newTodo, addTodo, setNewTodo }) => {
+
+    const handleChangeNewTodo = (e: React.ChangeEvent<HTMLInputElement>) => {
         setNewTodo(e.target.value)
     }
 
-    const handleKeyDown = (e) => {
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === "Enter") {
             e.preventDefault();
             addTodo();
