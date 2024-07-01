@@ -3,3 +3,9 @@ export type Todo = {
     title: string;
     completed: boolean;
 };
+
+export enum Filter {
+    'all' = 'All',
+    'atWork' = 'At work',
+    'completed' = 'Completed'
+};

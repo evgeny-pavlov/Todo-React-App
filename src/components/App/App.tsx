@@ -4,15 +4,15 @@ import TodoList from "../TodoList/TodoList";
 import ListAddItem from "../ListAddItem/ListAddItem";
 import ListFilter from "../ListFilter/ListFilter";
 import { filterTodos } from "../../utils/filterTodos"
-import { Todo } from "../../types/types";
+import { Todo, Filter } from "@/types/types";
 
 const App: React.FC = () => {
   const initTodos = useMemo(() => getTodos(), []);
   const [todos, setTodos] = useState<Todo[]>(initTodos);
-  const [editId, setEditId] = useState<string>("");
+  const [editId, setEditId] = useState<string | null>(null);
   const [editTitle, setEditTitle] = useState<string>("");
   const [newTodo, setNewTodo] = useState<string>("");
-  const [filter, setFilter] = useState<string>("all");
+  const [filter, setFilter] = useState<Filter>(Filter.all);
 
   useEffect(() => {
     setTodos(getTodos());
@@ -54,17 +54,24 @@ const App: React.FC = () => {
     const todoToEdit = todos.find(todo => todo.id === id);
     if (todoToEdit) {
       setEditTitle(todoToEdit.title)
-    }
-    ;
+    };
   };
+
+  const clearEditId = () => {
+    setEditId("");
+  }
+
+  const clearEditTitle = () => {
+    setEditTitle("");
+  }
 
   const saveTodo = (id: string) => {
     const newTodos = todos.map(todo =>
       todo.id === id ? { ...todo, title: editTitle } : todo
     );
     setTodos(newTodos);
-    setEditId("");
-    setEditTitle("");
+    clearEditId();
+    clearEditTitle();
   };
 
   const filteredTodos = filterTodos(todos, filter);

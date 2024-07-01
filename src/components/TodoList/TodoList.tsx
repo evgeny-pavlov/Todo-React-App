@@ -1,14 +1,14 @@
 import React from "react";
 import TodoItem from "../TodoItem";
 import './style.css';
-import { Todo } from "../../types/types";
+import { Todo } from "@/types/types";
 
 type TodoListProps = {
     todos: Todo[];
     deleteTodo: (id: string) => void;
     toggleTodo: (id: string) => void;
     editTodo: (id: string) => void;
-    editId: string;
+    editId: string | null;
     editTitle: string;
     setEditTitle: (title: string) => void;
     saveTodo: (id:string) => void;
