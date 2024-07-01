@@ -4,15 +4,15 @@ import TodoList from "../TodoList/TodoList";
 import ListAddItem from "../ListAddItem/ListAddItem";
 import ListFilter from "../ListFilter/ListFilter";
 import { filterTodos } from "../../utils/filterTodos"
+import { Todo, Filter } from "@/types/types";
 
-
-const App = () => {
+const App: React.FC = () => {
   const initTodos = useMemo(() => getTodos(), []);
-  const [todos, setTodos] = useState(initTodos);
-  const [editId, setEditId] = useState(null);
-  const [editTitle, setEditTitle] = useState("");
-  const [newTodo, setNewTodo] = useState("");
-  const [filter, setFilter] = useState("all");
+  const [todos, setTodos] = useState<Todo[]>(initTodos);
+  const [editId, setEditId] = useState<string | null>(null);
+  const [editTitle, setEditTitle] = useState<string>("");
+  const [newTodo, setNewTodo] = useState<string>("");
+  const [filter, setFilter] = useState<Filter>(Filter.all);
 
   useEffect(() => {
     setTodos(getTodos());
@@ -22,7 +22,7 @@ const App = () => {
     saveTodos(todos);
   }, [todos]);
 
-  const createToDoItem = (newTodo) => {
+  const createToDoItem = (newTodo: string) => {
     return {
       id: Date.now().toString(),
       title: newTodo,
@@ -37,31 +37,41 @@ const App = () => {
     setNewTodo("");
   };
 
-  const deleteTodo = (id) => {
+  const deleteTodo = (id: string) => {
     const newTodos = todos.filter(todo => todo.id !== id);
     setTodos(newTodos);
   };
 
-  const toggleTodo = (id) => {
+  const toggleTodo = (id: string) => {
     const newTodos = todos.map(todo =>
       todo.id === id ? { ...todo, completed: !todo.completed } : todo
     );
     setTodos(newTodos);
   };
 
-  const editTodo = (id) => {
+  const editTodo = (id: string) => {
     setEditId(id);
     const todoToEdit = todos.find(todo => todo.id === id);
-    setEditTitle(todoToEdit.title);
+    if (todoToEdit) {
+      setEditTitle(todoToEdit.title)
+    };
   };
 
-  const saveTodo = (id) => {
+  const clearEditId = () => {
+    setEditId("");
+  }
+
+  const clearEditTitle = () => {
+    setEditTitle("");
+  }
+
+  const saveTodo = (id: string) => {
     const newTodos = todos.map(todo =>
       todo.id === id ? { ...todo, title: editTitle } : todo
     );
     setTodos(newTodos);
-    setEditId(null);
-    setEditTitle("");
+    clearEditId();
+    clearEditTitle();
   };
 
   const filteredTodos = filterTodos(todos, filter);
