@@ -1,4 +1,6 @@
-export const filterTodos = (todos, filter) => {
+import { Todo } from "../types/types";
+
+export const filterTodos = (todos: Todo[], filter:string) => {
     return todos.filter(todo => {
       if (filter === "atWork") {
         return !todo.completed
@@ -8,7 +10,7 @@ export const filterTodos = (todos, filter) => {
     });
   };
   
-  export const countTodos = (todos, status) => {
+  export const countTodos = (todos: Todo[], status:string) => {
     if (status === "all") {
       return todos.length
     } else if (status === "atWork") {
